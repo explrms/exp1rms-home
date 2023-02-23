@@ -33,5 +33,24 @@ class SQL:
             result = curs.fetchone()
         return result[0]
 
+    async def load_color_code_by_name(self, color: str) -> str:
+        """
+        Бутафорская функция. Нужна для примера взаимодействия экземпляра класса IOT с базой данных
+        :param color:
+        :return: color_code: str
+
+        Example:
+        >>> await db.load_color_code_by_name('red')
+        >>> '#FF0000'
+        """
+        with self.__base.cursor() as curs:
+            curs.execute('SELECT color_code '
+                         'FROM color_setups '
+                         'WHERE color_name = %s', (
+                             color
+                         ))
+            color_code = curs.fetchone()[0]
+            return color_code
+
 
 db = SQL()
